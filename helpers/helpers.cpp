@@ -15,8 +15,8 @@ std::vector<std::string> helpers::splitString(const std::string& string, const s
             if(string.substr(c, delimiter.length()) == delimiter)
             {
                 result.push_back(string.substr(lastSplit, c - lastSplit));
-                c += delimiter.length();
-                lastSplit = c;
+                c += delimiter.length() - 1;
+                lastSplit = c + 1;
                 break;
             }
         }
