@@ -6,7 +6,6 @@
 
 #include "Range.h"
 
-#include <iostream>
 class RangeMap
 {
     public:

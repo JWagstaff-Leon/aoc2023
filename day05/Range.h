@@ -2,7 +2,6 @@
 
 #include <cstdint>
 
-#include <iostream>
 class Range
 {
     public:
@@ -13,7 +12,7 @@ class Range
         
         int64_t sourceToDestination(int64_t source) const;
         int64_t destinationToSource(int64_t destination) const;
-        
+
     private:
         int64_t source_, destination_;
         uint64_t range_;

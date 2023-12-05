@@ -18,7 +18,7 @@ void addRangeStringToRangeMap(const std::string& str, RangeMap* rangeMap)
 
 
 
-void readInAllMaps(std::ifstream& fin, std::vector<RangeMap*> maps)
+void readInAllMaps(std::ifstream& fin, std::vector<RangeMap*>& maps)
 {
     std::string currentLine;
     for(auto map : maps)
@@ -34,6 +34,16 @@ void readInAllMaps(std::ifstream& fin, std::vector<RangeMap*> maps)
             std::getline(fin, currentLine);
         }
     }
+};
+
+
+
+int64_t convertThroughAllMaps(int64_t source, const std::vector<RangeMap*>& maps)
+{
+    for(auto map : maps)
+        source = map->sourceToDestination(source);
+
+    return source;
 };
 
 
@@ -56,6 +66,7 @@ int main(int argc, char *argv[])
     std::string currentLine;
     std::vector<int64_t> seeds;
     RangeMap seedToSoilMap, soilToFertilizerMap, fertilizerToWater, waterToLight, lightToTemperature, temperatureToHumidity, humidityToLocation;
+    std::vector<RangeMap*> maps = {&seedToSoilMap, &soilToFertilizerMap, &fertilizerToWater, &waterToLight, &lightToTemperature, &temperatureToHumidity, &humidityToLocation};
     while(!fin.eof())
     {
         // Read seeds
@@ -63,15 +74,22 @@ int main(int argc, char *argv[])
         std::string seedsString = helpers::splitString(currentLine, {": "})[1]; // split "seeds: # # # ..." and take only the numbers;
         std::vector<std::string> seedStrings = helpers::splitString(seedsString, {" "}); // split between numbers
         for(auto seedString : seedStrings)
-        {
             seeds.push_back(helpers::stoi64(seedString.c_str()));
-        }
 
         // consume new line
         std::getline(fin, currentLine);
-        readInAllMaps(fin, {&seedToSoilMap, &soilToFertilizerMap, &fertilizerToWater, &waterToLight, &lightToTemperature, &temperatureToHumidity, &humidityToLocation});
+        readInAllMaps(fin, maps);
     }
     fin.close();
 
+    int64_t answer = convertThroughAllMaps(seeds[0], maps);
+    for(int i = 1; i < seeds.size(); i++)
+    {
+        int64_t result = convertThroughAllMaps(seeds[i], maps);
+        if(result < answer)
+            answer = result;
+    }
+
+    std::cout << "Answer: " << answer << "\n";
     return 0;
 }
