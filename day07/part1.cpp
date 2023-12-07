@@ -79,15 +79,8 @@ int main(int argc, char *argv[])
     }
     fin.close();
 
-// std::cout << "Unsorted hands and bets:\n";
-// for(auto hnb : handsAndBets)
-// std::cout << hnb.first << " | " << hnb.second << "\n";
-// char temp;
-// std::cin >> temp;
     std::sort(handsAndBets.begin(), handsAndBets.end(), [](std::pair<PokerHand, int> l, std::pair<PokerHand, int> r) { return l.first.isLessThan(r.first); });
-// std::cout << "Sorted hands and bets:\n";
-// for(auto hnb : handsAndBets)
-// std::cout << hnb.first << " | " << hnb.second << "\n";
+    
     uint64_t answer = 0;
     for(int i = 0; i < handsAndBets.size(); i++)
         answer += handsAndBets[i].second * (i + 1);
