@@ -43,12 +43,12 @@ class PokerHand
         PokerHand(CardType card1, CardType card2, CardType card3, CardType card4, CardType card5);
 
         PokerHandType getType() const;
-        CardType getCardOfRank(int rank) const;
-        bool isGreaterThan(const PokerHand& rhs) const;
+        CardType getCard(int index) const;
+        bool isLessThan(const PokerHand& rhs) const;
 
         friend std::ostream& operator<< (std::ostream& sout, const PokerHand pokerHand);
 
     private:
-        std::vector<CardType> rankedCards_;
+        std::vector<CardType> hand_;
         PokerHandType type_;
 };
