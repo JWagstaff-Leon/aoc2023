@@ -23,6 +23,11 @@ PokerHand::PokerHand(CardType card1, CardType card2, CardType card3, CardType ca
             foundCard->second += 1;
     }
 
+    int jokerCount = 0;
+    auto foundJokers = cards.find(CardType::Joker);
+    if(foundJokers != cards.end())
+        jokerCount = foundJokers->second;
+
     switch(cards.size())
     {
         case 1:
@@ -35,10 +40,24 @@ PokerHand::PokerHand(CardType card1, CardType card2, CardType card3, CardType ca
             auto card1 = card++;
             auto card2 = card;
 
-            if(card1->second == 4 ||card2->second == 4)
+            if(
+                card1->first != CardType::Joker && card1->second + jokerCount == 5 ||
+                card2->first != CardType::Joker && card2->second + jokerCount == 5
+            )
+            {
+                type_ = PokerHandType::FivePair;
+            }
+            else if(
+                card1->first != CardType::Joker && card1->second + jokerCount == 4 ||
+                card2->first != CardType::Joker && card2->second + jokerCount == 4
+            )
+            {
                 type_ = PokerHandType::FourPair;
+            }
             else
+            {
                 type_ = PokerHandType::FullHouse;
+            }
         }
             break;
 
@@ -49,20 +68,157 @@ PokerHand::PokerHand(CardType card1, CardType card2, CardType card3, CardType ca
             auto card2 = card++;
             auto card3 = card;
 
-            if(card1->second == 3 || card2->second == 3 || card3->second == 3)
+            if(
+                card1->first != CardType::Joker && card1->second + jokerCount == 4 ||
+                card2->first != CardType::Joker && card2->second + jokerCount == 4 ||
+                card3->first != CardType::Joker && card3->second + jokerCount == 4
+            )
+            {
+                type_ = PokerHandType::FourPair;
+            }
+            else if(
+                card1->first != CardType::Joker && card2->first != CardType::Joker &&
+                (
+                    card1->second == 3 && card2->second + jokerCount == 2 ||
+                    card2->second == 3 && card1->second + jokerCount == 2 ||
+                    card1->second == 2 && card2->second + jokerCount == 3 ||
+                    card2->second == 2 && card1->second + jokerCount == 3
+                )
+                ||
+                card1->first != CardType::Joker && card3->first != CardType::Joker &&
+                (
+                    card1->second == 3 && card3->second + jokerCount == 2 ||
+                    card3->second == 3 && card1->second + jokerCount == 2 ||
+                    card1->second == 2 && card3->second + jokerCount == 3 ||
+                    card3->second == 2 && card1->second + jokerCount == 3
+                )
+                ||
+                card2->first != CardType::Joker && card3->first != CardType::Joker &&
+                (
+                    card2->second == 3 && card3->second + jokerCount == 2 ||
+                    card3->second == 3 && card2->second + jokerCount == 2 ||
+                    card2->second == 2 && card3->second + jokerCount == 3 ||
+                    card3->second == 2 && card2->second + jokerCount == 3
+                )
+            )
+            {
+                type_ = PokerHandType::FullHouse;
+            }
+            else if(
+                card1->first != CardType::Joker && card1->second + jokerCount == 3 ||
+                card2->first != CardType::Joker && card2->second + jokerCount == 3 ||
+                card3->first != CardType::Joker && card3->second + jokerCount == 3
+            )
+            {
                 type_ = PokerHandType::ThreePair;
+            }
             else
+            {
                 type_ = PokerHandType::TwoPair;
-                
+            }
         }
             break;
 
         case 4:
-            type_ = PokerHandType::OnePair;
+        {
+            auto card = cards.cbegin();
+            auto card1 = card++;
+            auto card2 = card++;
+            auto card3 = card++;
+            auto card4 = card;
+
+           if(
+                card1->first != CardType::Joker && card1->second + jokerCount == 3 ||
+                card2->first != CardType::Joker && card2->second + jokerCount == 3 ||
+                card3->first != CardType::Joker && card3->second + jokerCount == 3 ||
+                card4->first != CardType::Joker && card4->second + jokerCount == 3
+            )
+            {
+                type_ = PokerHandType::ThreePair;
+            }
+            else if(
+                card1->first != CardType::Joker && card2->first != CardType::Joker &&
+                (
+                    card1->second == 2 && card2->second + jokerCount == 2 ||
+                    card2->second == 2 && card1->second + jokerCount == 2 ||
+                    card1->second == 2 && card2->second + jokerCount == 2 ||
+                    card2->second == 2 && card1->second + jokerCount == 2
+                )
+                ||
+                card1->first != CardType::Joker && card3->first != CardType::Joker &&
+                (
+                    card1->second == 2 && card3->second + jokerCount == 2 ||
+                    card3->second == 2 && card1->second + jokerCount == 2 ||
+                    card1->second == 2 && card3->second + jokerCount == 2 ||
+                    card3->second == 2 && card1->second + jokerCount == 2
+                )
+                ||
+                card1->first != CardType::Joker && card4->first != CardType::Joker &&
+                (
+                    card1->second == 2 && card4->second + jokerCount == 2 ||
+                    card4->second == 2 && card1->second + jokerCount == 2 ||
+                    card1->second == 2 && card4->second + jokerCount == 2 ||
+                    card4->second == 2 && card1->second + jokerCount == 2
+                )
+                ||
+                card2->first != CardType::Joker && card3->first != CardType::Joker &&
+                (
+                    card2->second == 2 && card3->second + jokerCount == 2 ||
+                    card3->second == 2 && card2->second + jokerCount == 2 ||
+                    card2->second == 2 && card3->second + jokerCount == 2 ||
+                    card3->second == 2 && card2->second + jokerCount == 2
+                )
+                ||
+                card2->first != CardType::Joker && card4->first != CardType::Joker &&
+                (
+                    card2->second == 2 && card4->second + jokerCount == 2 ||
+                    card4->second == 2 && card2->second + jokerCount == 2 ||
+                    card2->second == 2 && card4->second + jokerCount == 2 ||
+                    card4->second == 2 && card2->second + jokerCount == 2
+                )
+                ||
+                card3->first != CardType::Joker && card4->first != CardType::Joker &&
+                (
+                    card3->second == 2 && card4->second + jokerCount == 2 ||
+                    card4->second == 2 && card3->second + jokerCount == 2 ||
+                    card3->second == 2 && card4->second + jokerCount == 2 ||
+                    card4->second == 2 && card3->second + jokerCount == 2
+                )
+            )
+            {
+                type_ = PokerHandType::TwoPair;
+            }
+            else
+            {
+                type_ = PokerHandType::OnePair;
+            }
+        }
             break;
 
         case 5:
-            type_ = PokerHandType::HighCard;
+        {
+            auto card = cards.cbegin();
+            auto card1 = card++;
+            auto card2 = card++;
+            auto card3 = card++;
+            auto card4 = card++;
+            auto card5 = card;
+
+            if(
+                card1->first != CardType::Joker && card1->second + jokerCount == 2 ||
+                card2->first != CardType::Joker && card2->second + jokerCount == 2 ||
+                card3->first != CardType::Joker && card3->second + jokerCount == 2 ||
+                card4->first != CardType::Joker && card4->second + jokerCount == 2 ||
+                card5->first != CardType::Joker && card5->second + jokerCount == 2
+            )
+            {
+                type_ = PokerHandType::OnePair;
+            }
+            else
+            {
+                type_ = PokerHandType::HighCard;
+            }
+        }
             break;
     };
 };
@@ -97,82 +253,4 @@ bool PokerHand::isLessThan(const PokerHand& rhs) const
             return this->getCard(i) < rhs.getCard(i);
     }
     return false;
-};
-
-
-
-
-
-std::ostream& operator<< (std::ostream& sout, const PokerHand pokerHand)
-{
-    switch(pokerHand.type_)
-    {
-        case PokerHandType::FivePair :
-            sout << "FivePair | ";
-            break;
-        case PokerHandType::FourPair :
-            sout << "FourPair | ";
-            break;
-        case PokerHandType::FullHouse :
-            sout << "FullHouse | ";
-            break;
-        case PokerHandType::ThreePair :
-            sout << "ThreePair | ";
-            break;
-        case PokerHandType::TwoPair :
-            sout << "TwoPair | ";
-            break;
-        case PokerHandType::OnePair :
-            sout << "OnePair | ";
-            break;
-        case PokerHandType::HighCard :
-            sout << "HighCard | ";
-            break;
-    }
-    for(auto card : pokerHand.hand_)
-    {
-        switch(card)
-        {
-            case CardType::A:
-                sout << "A";
-                break;
-            case CardType::K:
-                sout << "K";
-                break;
-            case CardType::Q:
-                sout << "Q";
-                break;
-            case CardType::J:
-                sout << "J";
-                break;
-            case CardType::Ten:
-                sout << "T";
-                break;
-            case CardType::Nine:
-                sout << "9";
-                break;
-            case CardType::Eight:
-                sout << "8";
-                break;
-            case CardType::Seven:
-                sout << "7";
-                break;
-            case CardType::Six:
-                sout << "6";
-                break;
-            case CardType::Five:
-                sout << "5";
-                break;
-            case CardType::Four:
-                sout << "4";
-                break;
-            case CardType::Three:
-                sout << "3";
-                break;
-            case CardType::Two:
-                sout << "2";
-                break;
-        }
-    }
-    return sout;
 };

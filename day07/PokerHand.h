@@ -17,6 +17,7 @@ enum class CardType : int
     Four  =  4,
     Three =  3,
     Two   =  2,
+    Joker =  1,
 
     Invalid = -1
 };
@@ -36,7 +37,6 @@ enum class PokerHandType
 
 
 
-#include <iostream>
 class PokerHand
 {
     public:
@@ -45,8 +45,6 @@ class PokerHand
         PokerHandType getType() const;
         CardType getCard(int index) const;
         bool isLessThan(const PokerHand& rhs) const;
-
-        friend std::ostream& operator<< (std::ostream& sout, const PokerHand pokerHand);
 
     private:
         std::vector<CardType> hand_;
