@@ -94,8 +94,6 @@ int main(int argc, char *argv[])
         }
     }
         
-
-
     std::vector<uint64_t> steps;
     for(int currentIndex = 0; currentIndex < currentNodes.size(); currentIndex++)
     {
@@ -128,15 +126,12 @@ int main(int argc, char *argv[])
     bool answerFound = false;
     for(int i = 1; !answerFound; i++)
     {
-        answer = (steps[0] * i) - 1;
+        answer = steps[0] * i;
         answerFound = true;
         for(int j = 1; j < steps.size(); j++)
-        {
-            answerFound = answerFound && answer % steps[j] == steps[j] - 1;
-        }
+            answerFound = answerFound && answer % steps[j] == 0;
     }
-    answer += 1; // I'm not sure why it's 1 short, but it is
 
     std::cout << "Answer: " << answer << "\n";
     return 0;
-}
+};
