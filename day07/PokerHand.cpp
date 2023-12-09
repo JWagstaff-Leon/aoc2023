@@ -140,15 +140,11 @@ PokerHand::PokerHand(CardType card1, CardType card2, CardType card3, CardType ca
                 card1->first != CardType::Joker && card2->first != CardType::Joker &&
                 (
                     card1->second == 2 && card2->second + jokerCount == 2 ||
-                    card2->second == 2 && card1->second + jokerCount == 2 ||
-                    card1->second == 2 && card2->second + jokerCount == 2 ||
-                    card2->second == 2 && card1->second + jokerCount == 2
+                    card2->second == 2 && card1->second + jokerCount == 2 
                 )
                 ||
                 card1->first != CardType::Joker && card3->first != CardType::Joker &&
                 (
-                    card1->second == 2 && card3->second + jokerCount == 2 ||
-                    card3->second == 2 && card1->second + jokerCount == 2 ||
                     card1->second == 2 && card3->second + jokerCount == 2 ||
                     card3->second == 2 && card1->second + jokerCount == 2
                 )
@@ -156,15 +152,11 @@ PokerHand::PokerHand(CardType card1, CardType card2, CardType card3, CardType ca
                 card1->first != CardType::Joker && card4->first != CardType::Joker &&
                 (
                     card1->second == 2 && card4->second + jokerCount == 2 ||
-                    card4->second == 2 && card1->second + jokerCount == 2 ||
-                    card1->second == 2 && card4->second + jokerCount == 2 ||
                     card4->second == 2 && card1->second + jokerCount == 2
                 )
                 ||
                 card2->first != CardType::Joker && card3->first != CardType::Joker &&
                 (
-                    card2->second == 2 && card3->second + jokerCount == 2 ||
-                    card3->second == 2 && card2->second + jokerCount == 2 ||
                     card2->second == 2 && card3->second + jokerCount == 2 ||
                     card3->second == 2 && card2->second + jokerCount == 2
                 )
@@ -172,15 +164,11 @@ PokerHand::PokerHand(CardType card1, CardType card2, CardType card3, CardType ca
                 card2->first != CardType::Joker && card4->first != CardType::Joker &&
                 (
                     card2->second == 2 && card4->second + jokerCount == 2 ||
-                    card4->second == 2 && card2->second + jokerCount == 2 ||
-                    card2->second == 2 && card4->second + jokerCount == 2 ||
                     card4->second == 2 && card2->second + jokerCount == 2
                 )
                 ||
                 card3->first != CardType::Joker && card4->first != CardType::Joker &&
                 (
-                    card3->second == 2 && card4->second + jokerCount == 2 ||
-                    card4->second == 2 && card3->second + jokerCount == 2 ||
                     card3->second == 2 && card4->second + jokerCount == 2 ||
                     card4->second == 2 && card3->second + jokerCount == 2
                 )
