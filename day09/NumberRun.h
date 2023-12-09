@@ -12,6 +12,7 @@ class NumberRun
 
         bool isAllZero() const;
         int32_t getNext() const;
+        int32_t getPrevious() const;
     
     private:
         std::vector<int32_t> numbers_;

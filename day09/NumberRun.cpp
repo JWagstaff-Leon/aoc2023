@@ -45,3 +45,13 @@ int32_t NumberRun::getNext() const
     
     return (*numbers_.rbegin()) + differences_->getNext();
 };
+
+
+
+int32_t NumberRun::getPrevious() const
+{
+    if(isAllZero())
+        return 0;
+
+    return (*numbers_.begin()) - differences_->getPrevious();
+};
