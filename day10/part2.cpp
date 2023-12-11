@@ -324,14 +324,57 @@ int main(int argc, char *argv[])
     } while (changed != 0);
 
     // Count the inside tiles
+    std::ofstream fout("temp.txt");
     uint32_t answer = 0;
     for(int y = 0; y < loopTypes.size(); y += 2)
     {
         std::vector<LoopType> currentLine = loopTypes[y];
         for(int x = 0; x < currentLine.size(); x += 2)
+        {
+            switch(currentLine[x])
+            {
+                case LoopType::INSIDE:
+                    fout << "X";
+                    break;
+                case LoopType::OUTSIDE:
+                    fout << " ";
+                    break;
+                case LoopType::LOOP:
+                    switch(pipes[y / 2][x / 2])
+                    {
+                        case '-':
+                            fout << "─";
+                            break;
+                            
+                        case '|':
+                            fout << "│";
+                            break;
+                        
+                        case 'L':
+                            fout << "└";
+                            break;
+                        
+                        case 'J':
+                            fout << "┘";
+                            break;
+
+                        case '7':
+                            fout << "┐";
+                            break;
+
+                        case 'F':
+                            fout << "┌";
+                            break;
+                    }
+            }
             if(currentLine[x] == LoopType::INSIDE)
+            {
                 answer += 1;
+            }
+        }
+        fout << "\n";
     }
+    fout.close();
 
     std::cout << "Answer: " << answer << "\n";
     return 0;
