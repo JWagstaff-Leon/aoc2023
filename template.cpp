@@ -1,5 +1,8 @@
+#include <cstdint>
 #include <fstream>
 #include <iostream>
+#include <string>
+#include <vector>
 
 int main(int argc, char *argv[])
 {
@@ -23,4 +26,4 @@ int main(int argc, char *argv[])
     fin.close();
 
     return 0;
-}
+};
